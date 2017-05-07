@@ -70,26 +70,6 @@ public class CalculatorPage extends WebPage {
         add(new Button("9"));
 
         add(form);
-//        add(plusButton);
-//        add(minusButton);
-//        add(divideButton);
-//        add(multiplyButton);
-//        add(button0);
-//        add(button1);
-//        add(button2);
-//        add(button3);
-//        add(button4);
-//        add(button5);
-//        add(button6);
-//        add(button7);
-//        add(button8);
-//        add(button9);
-//        add(openBracketButton);
-//        add(closeBracketButton);
-//        add(dotButton);
-//        add(clearButton);
-//        add(equalsButton);
-
 
     }
 
