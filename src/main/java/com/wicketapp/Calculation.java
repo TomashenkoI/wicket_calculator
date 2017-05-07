@@ -1,37 +1,44 @@
 package com.wicketapp;
 
-import java.util.ArrayList;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
 public class Calculation {
-    ExpressionTransformation et = new ExpressionTransformation();
+
+    ExpressionTransformer expressionTransformer = new ExpressionTransformer();
 
     public double calculateExpression(String expression) {
-        ArrayList<String> operations1 = new ArrayList<>();
-        operations1.add("*");
-        operations1.add("/");
-        operations1.add("+");
-        operations1.add("-");
+        TreeSet<String> operators = new TreeSet<>();
+        operators.add("*");
+        operators.add("/");
+        operators.add("+");
+        operators.add("-");
 
-        String rpn = et.expressionTransformation(expression);
+        String rpn = expressionTransformer.transform(expression);
+
         StringTokenizer tokenizer = new StringTokenizer(rpn, " ");
         Stack<Double> stack = new Stack<Double>();
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            if (!operations1.contains(token)) {
+            if (!operators.contains(token)) {
                 stack.push(Double.parseDouble(token));
             } else {
                 double operand2 = stack.pop();
                 double operand1 = stack.pop();
-                if (token.equals("*")) {
-                    stack.push(operand1*operand2);
-                } else if (token.equals("/")) {
-                    stack.push(operand1/operand2);
-                } else if (token.equals("+")) {
-                    stack.push(operand1+operand2);
-                } else if (token.equals("-")) {
-                    stack.push(operand1-operand2);
+                switch (token) {
+                    case "*":
+                        stack.push(operand1 * operand2);
+                        break;
+                    case "/":
+                        stack.push(operand1 / operand2);
+                        break;
+                    case "+":
+                        stack.push(operand1 + operand2);
+                        break;
+                    case "-":
+                        stack.push(operand1 - operand2);
+                        break;
                 }
             }
         }

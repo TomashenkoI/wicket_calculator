@@ -4,66 +4,62 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reset.css">
     <wicket:link>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="reset.css">
     </wicket:link>
     <script>
         var doShowResult = true;
-//        var result = document.getElementById("text").innerHTML;
         function addSymbol(symbol) {
             if (doShowResult) {
-                document.getElementById("text").value = symbol;
+                document.getElementById("scoreboard").value = symbol;
                 doShowResult = false;
+            } else if (symbol === 'c') {
+                document.getElementById("scoreboard").value = " ";
             } else {
-                document.getElementById("text").value += symbol
+                document.getElementById("scoreboard").value += symbol
             }
         }
-        function reset() {
-            document.getElementById("text").value = "";
-        }
+
     </script>
 </head> 
 
-
-
 <body>
 
-<div class="container">
-    <div class="calculator-body">
-    <form wicket:id="form" id="form">
-        <input type="text" wicket:id="result" id="text">
-        
-    </form>
-    <button class="button" wicket:id="C" onclick="reset()">C</button>
-    <button class="button" wicket:id="(" onclick="addSymbol('(')">(</button>
-    <button class="button" wicket:id=")" onclick="addSymbol(')')">)</button>
-    <button class="button" wicket:id="+" onclick="addSymbol('+')">+</button>
-    <button class="button" wicket:id="7" onclick="addSymbol('7')">7</button>
-    <button class="button" wicket:id="8" onclick="addSymbol('8')">8</button>
-    <button class="button" wicket:id="9" onclick="addSymbol('9')">9</button>
-    
+    <div class="container">
 
-    
-    
-    <button class="button" wicket:id="-" onclick="addSymbol('-')">-</button>
-    <button class="button" wicket:id="4" onclick="addSymbol('4')">4</button>
-    <button class="button" wicket:id="5" onclick="addSymbol('5')">5</button>
-    <button class="button" wicket:id="6" onclick="addSymbol('6')">6</button>
-    <button class="button" wicket:id="*" onclick="addSymbol('*')">*</button>
-    <button class="button" wicket:id="1" onclick="addSymbol('1')">1</button>
-    <button class="button" wicket:id="2" onclick="addSymbol('2')">2</button>
-    <button class="button" wicket:id="3" onclick="addSymbol('3')">3</button>
-    
-    
-    <button class="button" wicket:id="/" onclick="addSymbol('/')">/</button>
-    <button class="zero button" wicket:id="0" onclick="addSymbol('0')">0</button>
-    
-    
-    
-    <button class="button" wicket:id="." onclick="addSymbol('.')">.</button>
-    <button type="submit" form="form" class="button" id="equals-button" wicket:id="=">=</button>
+        <div class="calculator-body">
+
+            <form wicket:id="form" id="form">
+
+                <input type="text" wicket:id="scoreboard" id="scoreboard" autocomplete="off">
+
+            </form>
+
+            <button class="button" wicket:id="C" onclick="addSymbol('c')">C</button>
+            <button class="button" wicket:id="(" onclick="addSymbol('(')">(</button>
+            <button class="button" wicket:id=")" onclick="addSymbol(')')">)</button>
+            <button class="button" wicket:id="+" onclick="addSymbol('+')">+</button>
+            <button class="button number" wicket:id="7" onclick="addSymbol('7')">7</button>
+            <button class="button number" wicket:id="8" onclick="addSymbol('8')">8</button>
+            <button class="button number" wicket:id="9" onclick="addSymbol('9')">9</button>
+            <button class="button" wicket:id="-" onclick="addSymbol('-')">-</button>
+            <button class="button number" wicket:id="4" onclick="addSymbol('4')">4</button>
+            <button class="button number" wicket:id="5" onclick="addSymbol('5')">5</button>
+            <button class="button number" wicket:id="6" onclick="addSymbol('6')">6</button>
+            <button class="button" wicket:id="*" onclick="addSymbol('*')">*</button>
+            <button class="button number" wicket:id="1" onclick="addSymbol('1')">1</button>
+            <button class="button number" wicket:id="2" onclick="addSymbol('2')">2</button>
+            <button class="button number" wicket:id="3" onclick="addSymbol('3')">3</button>
+            <button class="button" wicket:id="/" onclick="addSymbol('/')">/</button>
+            <button class="zero button number" wicket:id="0" onclick="addSymbol('0')">0</button>
+            <button class="button" wicket:id="." onclick="addSymbol('.')">.</button>
+            <button type="submit" form="form" class="button" id="equals-button" wicket:id="=">=</button>
+
+        </div>
+
     </div>
-</div>
     
 
 </body>
