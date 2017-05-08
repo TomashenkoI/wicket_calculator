@@ -4,20 +4,26 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
+
+import java.util.Arrays;
+import java.util.TreeSet;
 
 public class CalculatorPage extends WebPage {
 
     Calculation calculation = new Calculation();
 
-    String expression;
     String result;
 
     public CalculatorPage(final PageParameters parameters) {
 
-        if(parameters.getNamedKeys().contains("expression")){
-            result = parameters.get("expression").toString();
+        if(parameters.getNamedKeys().contains("result")){
+            result = parameters.get("result").toString();
         } else {
             result = "0";
         }
@@ -27,24 +33,24 @@ public class CalculatorPage extends WebPage {
     }
 
     private void addComponents() {
-        final TextField<String> resultField = new TextField<String>("scoreboard", Model.<String>of(result));
+
+        FeedbackPanel feedbackPanel = new FeedbackPanel("feedbackMsg");
+
+        final TextField<String> scoreboard = new TextField<String>("scoreboard", Model.<String>of(result));
+        scoreboard.add(new InsertDataValidator());
 
         Form<?> form = new Form<Void>("form") {
             @Override
             protected void onSubmit() {
-                if (result.charAt(0) == '-') {
-                    expression = 0 + result + resultField.getValue();
-                } else {
-                    expression = result + resultField.getValue();
-                }
-                result = String.valueOf(calculation.calculateExpression(expression));
+                result = calculation.calculateExpression(result, scoreboard.getValue());
                 PageParameters pageParameters = new PageParameters();
-                pageParameters.add("expression", result);
+                pageParameters.add("result", result);
                 setResponsePage(CalculatorPage.class, pageParameters);
             }
         };
 
-        form.add(resultField);
+        add(feedbackPanel);
+        form.add(scoreboard);
 
         add(new Button("+"));
         add(new Button("-"));
@@ -71,6 +77,29 @@ public class CalculatorPage extends WebPage {
 
         add(form);
 
+    }
+
+    private class InsertDataValidator implements IValidator<String>{
+        @Override
+        public void validate(IValidatable<String> iValidatable) {
+            String expression = iValidatable.getValue();
+
+            TreeSet<Character> operators = new TreeSet<>(Arrays.asList(new Character[]{'+', '-', '/', '*'}));
+            TreeSet<Character> symbols = new TreeSet<>(Arrays.asList(new Character[]{'+', '-', '/', '*', '0', '1', '2',
+            '3', '4', '5', '6', '7', '8', '9', '(', ')', '.'}));
+
+            if (operators.contains(expression.charAt(expression.length() - 1))) {
+                iValidatable.error(new ValidationError().setMessage("missed operand"));
+            }
+
+            for (Character character : expression.toCharArray()) {
+                if (!symbols.contains(character)) {
+                    iValidatable.error(new ValidationError().setMessage("invalid values"));
+                }
+            }
+
+
+        }
     }
 
 }

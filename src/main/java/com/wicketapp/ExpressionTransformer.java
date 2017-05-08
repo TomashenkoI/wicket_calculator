@@ -4,7 +4,8 @@ import java.util.*;
 
 public class ExpressionTransformer {
 
-    public static String transform(String expression) {
+    public String transform(String result, String scoreboard) {
+        String expression;
         ArrayList<String> operands = new ArrayList<>();
         Stack<String> stack = new Stack<>();
         String leftBracket = "(";
@@ -20,7 +21,17 @@ public class ExpressionTransformer {
         operationSymbols.add(leftBracket);
         operationSymbols.add(rightBracket);
 
-        expression = expression.replace(" ", "");
+        TreeSet<String> set = new TreeSet<>(operations.keySet());
+
+        if (set.contains(String.valueOf(scoreboard.charAt(0)))) {
+            if (result.charAt(0) == '-') {
+                expression = 0 + result + scoreboard;
+            } else {
+                expression = result + scoreboard;
+            }
+        } else {
+            expression = scoreboard;
+        }
 
         int index = 0;
         boolean findNext = true;
@@ -69,14 +80,14 @@ public class ExpressionTransformer {
         while (!stack.empty()) {
             operands.add(stack.pop());
         }
-        StringBuilder result = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         if (!operands.isEmpty()) {
-            result.append(operands.remove(0));
+            stringBuilder.append(operands.remove(0));
         }
         while (!operands.isEmpty()) {
-            result.append(" ").append(operands.remove(0));
+            stringBuilder.append(" ").append(operands.remove(0));
         }
-        return result.toString();
+        return stringBuilder.toString();
     }
 
 }

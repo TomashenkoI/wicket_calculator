@@ -63,4 +63,15 @@ input:focus {
 .number {
 	background-color: #000;
 	background: linear-gradient(to top, #000 40%, #7a7a7a);
-} 
+}
+
+.feedbackMsg {
+	position: absolute;
+	color: red;
+	left: 47%;
+	top: 20%;
+}
+
+.feedbackMsg ul {
+	margin: auto;
+}

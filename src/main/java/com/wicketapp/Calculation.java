@@ -1,5 +1,6 @@
 package com.wicketapp;
 
+import java.util.Arrays;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -8,14 +9,11 @@ public class Calculation {
 
     ExpressionTransformer expressionTransformer = new ExpressionTransformer();
 
-    public double calculateExpression(String expression) {
-        TreeSet<String> operators = new TreeSet<>();
-        operators.add("*");
-        operators.add("/");
-        operators.add("+");
-        operators.add("-");
+    public String calculateExpression(String result, String scoreboard) {
 
-        String rpn = expressionTransformer.transform(expression);
+        TreeSet<String> operators = new TreeSet<>(Arrays.asList(new String[]{"+", "-", "/", "*"}));
+
+        String rpn = expressionTransformer.transform(result, scoreboard);
 
         StringTokenizer tokenizer = new StringTokenizer(rpn, " ");
         Stack<Double> stack = new Stack<Double>();
@@ -46,6 +44,6 @@ public class Calculation {
             throw new IllegalArgumentException("Expression syntax error.");
         }
 
-        return stack.pop();
+        return stack.pop().toString();
     }
 }
