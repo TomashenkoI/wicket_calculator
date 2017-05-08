@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
@@ -16,9 +17,10 @@ import java.util.TreeSet;
 
 public class CalculatorPage extends WebPage {
 
-    Calculation calculation = new Calculation();
+    @SpringBean(name = "calculator")
+    private Calculator calculator;
 
-    String result;
+    private String result;
 
     public CalculatorPage(final PageParameters parameters) {
 
@@ -42,7 +44,7 @@ public class CalculatorPage extends WebPage {
         Form<?> form = new Form<Void>("form") {
             @Override
             protected void onSubmit() {
-                result = calculation.calculateExpression(result, scoreboard.getValue());
+                result = calculator.calculateExpression(result, scoreboard.getValue());
                 PageParameters pageParameters = new PageParameters();
                 pageParameters.add("result", result);
                 setResponsePage(CalculatorPage.class, pageParameters);
@@ -102,4 +104,7 @@ public class CalculatorPage extends WebPage {
         }
     }
 
+    public void setCalculator(Calculator calculator) {
+        this.calculator = calculator;
+    }
 }

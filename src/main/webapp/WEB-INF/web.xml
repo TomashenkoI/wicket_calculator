@@ -24,6 +24,10 @@
 			<param-value>com.wicketapp.WicketApplication</param-value>
 		</init-param>
 	</filter>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
 	<filter-mapping>
 		<filter-name>wicket.wicket_calculator</filter-name>

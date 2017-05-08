@@ -5,9 +5,9 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-public class Calculation {
+public class Calculator {
 
-    ExpressionTransformer expressionTransformer = new ExpressionTransformer();
+    private ExpressionTransformer expressionTransformer;
 
     public String calculateExpression(String result, String scoreboard) {
 
@@ -45,5 +45,9 @@ public class Calculation {
         }
 
         return stack.pop().toString();
+    }
+
+    public void setExpressionTransformer(ExpressionTransformer expressionTransformer) {
+        this.expressionTransformer = expressionTransformer;
     }
 }
